@@ -1,4 +1,5 @@
 from intersection import NextScheduledPhase
+from priority import calculate_max_green
 
 
 def next_phase(phases, state, max_green, max_green_diff, is_priority):
@@ -26,7 +27,7 @@ def densest_flow(flows):
 def best_green(phase, max_green, max_green_diff, is_priority):
     bg = []
     for f in phase.flows:
-        flow_max_green = calculate_max_green(max_green, max_green_diff, f.priority.priority) if is_priority else max_green
+        flow_max_green = calculate_max_green(max_green, max_green_diff, f.priority.priority, is_priority)
         # No vehicles/pedestrians
         if f.characteristics.density == 0:
             bg.append(0)
@@ -40,7 +41,3 @@ def best_green(phase, max_green, max_green_diff, is_priority):
         else:
             bg.append(flow_max_green)
     return max(bg)
-
-
-def calculate_max_green(max_green, max_green_diff, priority):
-    return max_green + max_green_diff if priority == 1 else max_green - max_green_diff
