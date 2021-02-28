@@ -12,11 +12,12 @@ else:
 import traci
 
 
-def sense_characteristics(flows, max_speed, max_green, max_green_diff):
+def sense_characteristics(flows, max_speed, max_green, max_green_diff, is_priority):
     res = []
     for f in flows:
-        #TODO: Change to flow 
-        d_green = calculate_max_green(max_green, max_green_diff, f.priority.priority) * max_speed
+        #TODO: Change to flow
+        flow_max_green = calculate_max_green(max_green, max_green_diff, f.priority.priority) if is_priority else max_green
+        d_green = flow_max_green * max_speed
         density = 0
         density_in_d_green = 0
         lv_speed = 0

@@ -20,10 +20,10 @@ from buses import generate as generate_buses
 from tammsaare_sopruse_controllers.i1 import control as control_tln_i1
 
 
-def simulate_tln(max_green, max_green_diff):
+def simulate_tln(max_green, max_green_diff, priority):
     step = 0
     while traci.simulation.getMinExpectedNumber() > 0:
-        control_tln_i1(step, max_green, max_green_diff)
+        control_tln_i1(step, max_green, max_green_diff, priority)
         traci.simulationStep()
         step += 1
     traci.close()
@@ -34,6 +34,7 @@ def options():
     opt_parser = optparse.OptionParser()
     opt_parser.add_option("--nogui", action="store_true", default=False, help="run the commandline version of sumo")
     opt_parser.add_option("--new", action="store_true", default=False, help="generate new trip files")
+    opt_parser.add_option("--priority", action="store_true", default=False, help="run with priority")
     opt_parser.add_option("--type", action="store", type="string", dest="type", help=PEAK + " or " + OFFPEAK)
     opt_parser.add_option("--max-green", action="store", type="int", dest="max_green", help="max green in seconds")
     opt_parser.add_option("--mg-diff", action="store", type="int", dest="mg_diff", help="max green diff in seconds")
@@ -62,6 +63,6 @@ if __name__ == "__main__":
     simulation_timestamp = str(time.time())
     path = os.environ['TS_SIMULATION']
     traci.start([sumoBinary, "-c", path + "/input/tammsaare_sopruse/" + config_name, "--tripinfo-output",
-                 path + "/output/tammsaare_sopruse/trip_info-" + simulation_timestamp + ".txt",
+                 path + "/output/tammsaare_sopruse/petssa/trip_info-" + simulation_timestamp + ".txt",
                  "--device.emissions.probability", "1.0"])
-    simulate_tln(options.max_green, options.mg_diff)
+    simulate_tln(options.max_green, options.mg_diff, options.priority)

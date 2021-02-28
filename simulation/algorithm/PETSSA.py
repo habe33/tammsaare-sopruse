@@ -1,7 +1,7 @@
 from intersection import NextScheduledPhase
 
 
-def next_phase(phases, state, max_green, max_green_diff):
+def next_phase(phases, state, max_green, max_green_diff, is_priority):
     unscheduled = [p for p in phases if p.id in [id for id, scheduled in state if not scheduled]]
     flows = [(p.id, p.flows) for p in unscheduled]
     phase_id, flow = densest_flow(flows)
@@ -9,7 +9,7 @@ def next_phase(phases, state, max_green, max_green_diff):
     if flow.characteristics.density == 0:
         return None
 
-    bg = best_green(next(p for p in unscheduled if p.id == phase_id), max_green, max_green_diff)
+    bg = best_green(next(p for p in unscheduled if p.id == phase_id), max_green, max_green_diff, is_priority)
 
     if bg is None or bg == 0:
         return None
@@ -23,10 +23,10 @@ def densest_flow(flows):
     return p_id, d_flow
 
 
-def best_green(phase, max_green, max_green_diff):
+def best_green(phase, max_green, max_green_diff, is_priority):
     bg = []
     for f in phase.flows:
-        flow_max_green = calculate_max_green(max_green, max_green_diff, f.priority.priority)
+        flow_max_green = calculate_max_green(max_green, max_green_diff, f.priority.priority) if is_priority else max_green
         # No vehicles/pedestrians
         if f.characteristics.density == 0:
             bg.append(0)

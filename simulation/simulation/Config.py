@@ -13,3 +13,4 @@ class Config:
     crossings: list = None
     max_green: int = None
     max_green_diff: int = None
+    is_priority: bool = True

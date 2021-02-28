@@ -23,13 +23,13 @@ def tsl(step, config, state):
 
 
 def calculate_next_phase(step, config, phases_state):
-    phases = enrich_phases(config.phases, config.max_speed, config.max_green, config.max_green_diff)
+    phases = enrich_phases(config.phases, config.max_speed, config.max_green, config.max_green_diff, config.is_priority)
     if config.crossings is not None:
         crossings = enrich_crossings(config.crossings)
         phases = merge(step, config, phases, crossings)
     log_characteristics(step, config.logging_file, config.intersection_name, phases)
     log(step, config.logging_file, config.intersection_name, "cycle state: %s" % phases_state)
-    p = next_phase(phases, phases_state, config.max_green, config.max_green_diff)
+    p = next_phase(phases, phases_state, config.max_green, config.max_green_diff, config.is_priority)
     log(step, config.logging_file, config.intersection_name,
         "proposed Phase by PETSSA: %s" % (None if p is None else p.id))
     return p
@@ -68,10 +68,10 @@ def all_scheduled(phases):
     return not [scheduled for id, scheduled in phases if not scheduled]
 
 
-def enrich_phases(phases, max_speed, max_green, max_green_diff):
+def enrich_phases(phases, max_speed, max_green, max_green_diff, is_priority):
     enriched = phases
     for p in enriched:
-        characteristics = sense_characteristics(p.flows, max_speed, max_green, max_green_diff)
+        characteristics = sense_characteristics(p.flows, max_speed, max_green, max_green_diff, is_priority)
         for f in p.flows:
             f.characteristics = next(p for p in characteristics if p.id == f.id)
     return enriched

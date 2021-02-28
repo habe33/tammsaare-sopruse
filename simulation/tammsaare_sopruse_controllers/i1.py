@@ -15,9 +15,10 @@ _config = Config(_phases, _protection_phases, _green_states, MAX_SPEED, TL_LOGIC
 _state = State([(p.id, False) for p in _phases])
 
 
-def control(step, max_green, max_green_diff):
+def control(step, max_green, max_green_diff, priority):
     global _state
     _config.max_green = max_green
     _config.max_green_diff = max_green_diff
+    _config.is_priority = priority
     if step == traci.trafficlight.getNextSwitch(TL_LOGIC_ID):
         _state = tsl(step, _config, _state)

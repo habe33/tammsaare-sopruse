@@ -1,0 +1,1 @@
+sumo-gui -c $TS_SIMULATION/input/tammsaare_sopruse/peak.sumo.cfg --tripinfo-output $TS_SIMULATION/output/tammsaare_sopruse/baseline/trip_info.txt --device.emissions.probability 1.0
