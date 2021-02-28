@@ -11,6 +11,5 @@ class Flow:
     e2_lane_ids: list
     e3_lane_ids: list
     shortest_green: int
-    max_green: int = None
     priority: Priority = None
     characteristics: FlowCharacteristic = None

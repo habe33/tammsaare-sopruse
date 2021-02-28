@@ -11,3 +11,5 @@ class Config:
     intersection_name: str
     logging_file: str
     crossings: list = None
+    max_green: int = None
+    max_green_diff: int = None

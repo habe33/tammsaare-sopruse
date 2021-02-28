@@ -12,11 +12,11 @@ else:
 import traci
 
 
-def sense_characteristics(flows, max_speed):
+def sense_characteristics(flows, max_speed, max_green, max_green_diff):
     res = []
     for f in flows:
         #TODO: Change to flow 
-        d_green = f.max_green * max_speed
+        d_green = calculate_max_green(max_green, max_green_diff, f.priority.priority) * max_speed
         density = 0
         density_in_d_green = 0
         lv_speed = 0
@@ -59,3 +59,7 @@ def sense_pedestrians(crossing):
                 if e in route_edges and traci.person.getWaitingTime(p) > 5.0:
                     waiting_persons.append(p)
     return len(waiting_persons)
+
+
+def calculate_max_green(max_green, max_green_diff, priority):
+    return max_green + max_green_diff if priority == 1 else max_green - max_green_diff

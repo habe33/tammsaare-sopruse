@@ -4,7 +4,7 @@ import random
 
 from pedestrians.Demand import Demand
 
-path = os.environ['SUMO_SIMULATION']
+path = os.environ['TS_SIMULATION']
 
 
 def generate(city):
@@ -13,7 +13,7 @@ def generate(city):
 
 def generate_pedestrians_traffic(city):
     random.seed(42)
-    path = os.environ['SUMO_SIMULATION']
+    path = os.environ['TS_SIMULATION']
     filepath = path + "/input/" + city + "/pedestrians.trips.xml"
     mode = 'a' if os.path.exists(filepath) else 'w'
     with open(filepath, mode) as routes:

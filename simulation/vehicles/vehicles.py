@@ -5,7 +5,7 @@ import random
 from vehicles.Demand import Demand
 from traffic_types import PEAK
 
-path = os.environ['SUMO_SIMULATION']
+path = os.environ['TS_SIMULATION']
 
 
 def generate(traffic_type, city):
@@ -15,7 +15,7 @@ def generate(traffic_type, city):
 
 def generate_peak_hour_traffic(city):
     random.seed(42)
-    path = os.environ['SUMO_SIMULATION']
+    path = os.environ['TS_SIMULATION']
     filepath = path + "/input/" + city + "/vehicle-" + PEAK + ".trips.xml"
     mode = 'a' if os.path.exists(filepath) else 'w'
     with open(filepath, mode) as routes:
