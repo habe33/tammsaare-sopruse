@@ -1,0 +1,1 @@
+from tammsaare_sopruse_controllers.i1 import control
