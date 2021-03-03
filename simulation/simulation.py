@@ -60,9 +60,12 @@ if __name__ == "__main__":
     elif options.type == OFFPEAK:
         config_name = OFFPEAK + ".sumo.cfg"
 
-    simulation_timestamp = str(time.time())
     path = os.environ['TS_SIMULATION']
+    identifier = options.type + "-" + str(options.max_green) + "-" + str(options.mg_diff) + "-" + str(options.priority)
+
     traci.start([sumoBinary, "-c", path + "/input/tammsaare_sopruse/" + config_name, "--tripinfo-output",
-                 path + "/output/tammsaare_sopruse/petssa/trip_info-" + simulation_timestamp + ".txt",
-                 "--device.emissions.probability", "1.0"])
+                 path + "/output/tammsaare_sopruse/petssa/trip_info-" + identifier + ".xml",
+                 "--device.emissions.probability", "1.0", "--duration-log.statistics", "--log", path + "/output/tammsaare_sopruse/petssa/statistics-" + identifier + ".txt"])
+    print("Simulating Tammsaare-Sõpruse %s with MAX_GREEN: %s, MG_DIFF: %s, PRIORITY: %s" % (options.type, options.max_green, options.mg_diff, options.priority))
     simulate_tln(options.max_green, options.mg_diff, options.priority)
+    print("Simulation completed")
