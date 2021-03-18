@@ -60,8 +60,3 @@ def print_header(routes):
 
 def print_footer(routes):
     print("</routes>", file=routes)
-
-
-if __name__ == '__main__':
-    generate('tallinn')
-    generate('narva')

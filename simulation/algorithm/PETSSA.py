@@ -36,8 +36,8 @@ def best_green(phase, max_green, max_green_diff, is_priority):
             res = f.characteristics.lv_dist / (f.characteristics.lv_speed if f.characteristics.lv_speed >= 1 else 1)
             bg.append(flow_max_green if res > flow_max_green else max(res + 2, f.shortest_green))
         # No vehicles but pedestrians waiting
-        elif next((c for c in phase.crossings if c.density > 0), None) is not None:
-            bg.append(max(phase.crossings, key=lambda item: item.min_green).min_green)
+        # elif next((c for c in phase.crossings if c.density > 0), None) is not None:
+        #     bg.append(max(phase.crossings, key=lambda item: item.min_green).min_green)
         else:
             bg.append(flow_max_green)
     return max(bg)

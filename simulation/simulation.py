@@ -2,7 +2,6 @@
 import os
 import sys
 import optparse
-import time
 
 if 'SUMO_HOME' in os.environ and 'TS_SIMULATION' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
@@ -16,6 +15,7 @@ import traci
 from traffic_types import PEAK, OFFPEAK
 from vehicles import generate as generate_vehicles
 from buses import generate as generate_buses
+from pedestrians import generate as generate_pedestrians
 
 from tammsaare_sopruse_controllers.i1 import control as control_tln_i1
 
@@ -53,6 +53,7 @@ if __name__ == "__main__":
     if options.new:
         generate_vehicles(options.type, "tammsaare_sopruse")
         generate_buses(options.type, "tammsaare_sopruse")
+        generate_pedestrians(options.type, "tammsaare_sopruse")
 
     config_name = ""
     if options.type == PEAK:

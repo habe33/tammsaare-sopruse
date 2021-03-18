@@ -1,13 +1,83 @@
 #!/bin/sh
-MAX_GREEN=25
-MG_DIFF=5
+pids=""
+
+AGG_PREFIX="aggregated_result"
+
 PRIORITY=True
 TYPE=peak
+for maxGreen in 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+do
+	for mgDiff in 1 2 3 4 5 6 7
+	do
+		python $TS_SIMULATION/simulation.py --type ${TYPE} --max-green ${maxGreen} --mg-diff ${mgDiff} --priority ${PRIORITY}
+		pids="$pids $!"
+	done
+done
 
-IDENTIFIER="${TYPE}-${MAX_GREEN}-${MG_DIFF}-${PRIORITY}"
-SIM_OUTPUT_FILE="${TS_SIMULATION}/output/tammsaare_sopruse/petssa/trip_info-${IDENTIFIER}.xml"
-RES_OUTPUT_FILE="${TS_SIMULATION}/output/tammsaare_sopruse/petssa/result-${IDENTIFIER}.csv"
-AGG_OUTPUT_FILE="${TS_SIMULATION}/output/tammsaare_sopruse/petssa/aggregated_result-${IDENTIFIER}.csv"
-python $TS_SIMULATION/simulation.py --nogui --type ${TYPE} --max-green ${MAX_GREEN} --mg-diff ${MG_DIFF} --priority ${PRIORITY}
-python $SUMO_HOME/tools/xml/xml2csv.py ${SIM_OUTPUT_FILE} --output ${RES_OUTPUT_FILE}
-python $TS_SIMULATION/output/aggregate_output.py --input ${RES_OUTPUT_FILE} --output ${AGG_OUTPUT_FILE}
+wait $pids
+
+pids=""
+for maxGreen in 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+do
+	for mgDiff in 1 2 3 4 5 6 7
+	do
+		python $SUMO_HOME/tools/xml/xml2csv.py "${TS_SIMULATION}/output/tammsaare_sopruse/petssa/trip_info-${TYPE}-${maxGreen}-${mgDiff}-${PRIORITY}.xml" --output "${TS_SIMULATION}/output/tammsaare_sopruse/petssa/result-${TYPE}-${maxGreen}-${mgDiff}-${PRIORITY}.csv"
+		pids="$pids $!"
+	done
+done
+
+wait $pids
+
+pids=""
+for maxGreen in 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+do
+	for mgDiff in 1 2 3 4 5 6 7
+	do
+		python $TS_SIMULATION/output/aggregate_output.py --input "${TS_SIMULATION}/output/tammsaare_sopruse/petssa/result-${TYPE}-${maxGreen}-${mgDiff}-${PRIORITY}.csv" --output "${TS_SIMULATION}/output/tammsaare_sopruse/petssa/${AGG_PREFIX}-${TYPE}-${maxGreen}-${mgDiff}-${PRIORITY}.csv"
+		pids="$pids $!"
+	done
+done
+
+wait $pids
+
+PRIORITY=False
+TYPE=peak
+for maxGreen in 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+do
+	for mgDiff in 1 2 3 4 5 6 7
+	do
+		python $TS_SIMULATION/simulation.py --type ${TYPE} --nogui --max-green ${maxGreen} --mg-diff ${mgDiff}
+		pids="$pids $!"
+	done
+done
+
+wait $pids
+
+pids=""
+for maxGreen in 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+do
+	for mgDiff in 1 2 3 4 5 6 7
+	do
+		python $SUMO_HOME/tools/xml/xml2csv.py "${TS_SIMULATION}/output/tammsaare_sopruse/petssa/trip_info-${TYPE}-${maxGreen}-${mgDiff}-${PRIORITY}.xml" --output "${TS_SIMULATION}/output/tammsaare_sopruse/petssa/result-${TYPE}-${maxGreen}-${mgDiff}-${PRIORITY}.csv"
+		pids="$pids $!"
+	done
+done
+
+wait $pids
+
+pids=""
+for maxGreen in 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+do
+	for mgDiff in 1 2 3 4 5 6 7
+	do
+		python $TS_SIMULATION/output/aggregate_output.py --input "${TS_SIMULATION}/output/tammsaare_sopruse/petssa/result-${TYPE}-${maxGreen}-${mgDiff}-${PRIORITY}.csv" --output "${TS_SIMULATION}/output/tammsaare_sopruse/petssa/${AGG_PREFIX}-${TYPE}-${maxGreen}-${mgDiff}-${PRIORITY}.csv"
+		pids="$pids $!"
+	done
+done
+
+wait $pids
+
+# Generate report
+REP_INPUT_FOLDER="${TS_SIMULATION}/output/tammsaare_sopruse/petssa/"
+REP_OUTPUT_FILE="${TS_SIMULATION}/output/tammsaare_sopruse/petssa/report.csv"
+python $TS_SIMULATION/output/generate_report.py --folder ${REP_INPUT_FOLDER} --prefix ${AGG_PREFIX} --output ${REP_OUTPUT_FILE}
