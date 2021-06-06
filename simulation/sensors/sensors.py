@@ -69,7 +69,9 @@ def sense_pedestrians(crossing):
         route_edges = traci.person.getEdges(p)
         if crossing.from_edge in route_edges:
             for e in crossing.to_edges:
-                if e in route_edges and traci.person.getWaitingTime(p) > 5.0:
+                # to_edge should be after from_edge in the edge list
+                # person must have waited more than 5 seconds
+                if e in route_edges and route_edges.index(crossing.from_edge) < route_edges.index(e) and traci.person.getWaitingTime(p) > 5.0:
                     waiting_persons.append(p)
     return len(waiting_persons)
 

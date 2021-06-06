@@ -7,7 +7,7 @@ from pedestrians.Demand import Demand
 path = os.environ['TS_SIMULATION']
 
 
-def generate(city):
+def generate(traffic_type, city):
     generate_pedestrians_traffic(city)
 
 
