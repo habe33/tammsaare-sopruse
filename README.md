@@ -27,7 +27,7 @@ sh run_baseline.sh
 
 ## Extending to another intersection
 Change 
-simulation/input/
-simulation/pedestrians/input
-simulation/vehicles/input
-simulation/buses/input
+* simulation/input/
+* simulation/pedestrians/input
+* simulation/vehicles/input
+* simulation/buses/input
