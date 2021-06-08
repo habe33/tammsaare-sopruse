@@ -31,3 +31,9 @@ Change
 * simulation/pedestrians/input
 * simulation/vehicles/input
 * simulation/buses/input
+
+## Changing priorities of traffic light management
+Priorities are read before every BEST-GREEN calculation. Priorities can be defined in
+```
+simulation/input/map/priorities.csv
+```
