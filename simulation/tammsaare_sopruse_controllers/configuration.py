@@ -7,7 +7,7 @@ INTERSECTION_NAME = 'Tammsaare-Sõpruse'
 PATH = os.environ['TS_SIMULATION']
 
 FLOWS_PATH = PATH + '/input/tammsaare_sopruse/flows.csv'
-#CROSSINGS_PATH = PATH + '/input/tammsaare_sopruse/crossings.csv'
+CROSSINGS_PATH = PATH + '/input/tammsaare_sopruse/crossings.csv'
 PRIORITIES_PATH = PATH + '/input/tammsaare_sopruse/priorities.csv'
 PHASES_PATH = PATH + '/input/tammsaare_sopruse/phases.csv'
 GREEN_TSL_STATES_PATH = PATH + '/input/tammsaare_sopruse/green_tsl_states.csv'
