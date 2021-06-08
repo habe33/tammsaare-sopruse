@@ -1,7 +1,7 @@
 import traci
 
-from tammsaare_sopruse_controllers.configuration import TL_LOGIC_ID, INTERSECTION_NAME, MAX_SPEED
-from tammsaare_sopruse_controllers.configuration import PHASES_PATH, FLOWS_PATH, PRIORITIES_PATH, \
+from map_controllers.configuration import TL_LOGIC_ID, INTERSECTION_NAME, MAX_SPEED
+from map_controllers.configuration import PHASES_PATH, FLOWS_PATH, PRIORITIES_PATH, \
     PROTECTION_TSL_STATES_PATH, GREEN_TSL_STATES_PATH, LOGGING_PATH, CROSSINGS_PATH
 from configuration.parser import construct_phases, read_protection_states, read_green_states, read_crossings
 from simulation import tsl, Config, State

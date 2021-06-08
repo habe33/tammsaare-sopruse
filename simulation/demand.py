@@ -7,9 +7,9 @@ from buses import generate as generate_buses
 from pedestrians import generate as generate_pedestrians
 
 def generate_demand(type):
-    generate_vehicles(type, "tammsaare_sopruse")
-    generate_buses(type, "tammsaare_sopruse")
-    generate_pedestrians(type, "tammsaare_sopruse")
+    generate_vehicles(type, "map")
+    generate_buses(type, "map")
+    generate_pedestrians(type, "map")
 
 if __name__ == "__main__":
     opt_parser = optparse.OptionParser()
