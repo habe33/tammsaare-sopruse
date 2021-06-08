@@ -16,7 +16,18 @@ Run PETSSA simulation with GUI:
 ```
 sh run_petssa.sh
 ```
+Run PETSSA with different inputs:
+```
+sh run_simulation.sh
+```
 Run current Tammsaare-Sõpruse intersection traffic signal logic simulation with GUI: 
 ```
 sh run_baseline.sh
 ```
+
+## Extending to another intersection
+Change 
+simulation/input/
+simulation/pedestrians/input
+simulation/vehicles/input
+simulation/buses/input
